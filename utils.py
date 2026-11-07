@@ -24,3 +24,23 @@ def get_random_word():
         )
 
     return random.choice(words)
+
+
+def get_valid_letter(guessed_letters):
+    """
+    Pide una letra al jugador hasta recibir una entrada válida.
+
+    Acepta exactamente un carácter alfabético que no esté en
+    guessed_letters. Si la entrada no es válida, muestra el motivo
+    y vuelve a pedirla.
+    """
+    while True:
+        entry = input("Ingresa una letra: ").strip().lower()
+        if len(entry) != 1:
+            print("Error: debes ingresar exactamente una letra.")
+        elif not entry.isalpha():
+            print("Error: debes ingresar una letra.")
+        elif entry in guessed_letters:
+            print(f"Error: Ya intentaste la letra '{entry}'.")
+        else:
+            return entry
