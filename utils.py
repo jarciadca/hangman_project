@@ -44,3 +44,19 @@ def get_valid_letter(guessed_letters):
             print(f"Error: Ya intentaste la letra '{entry}'.")
         else:
             return entry
+
+
+def display_status(game):
+    """
+    Muestra el estado actual de la partida.
+
+    Imprime el progreso de la palabra, las letras ya intentadas
+    (correctas e incorrectas) y los intentos incorrectos restantes.
+    """
+    attempted = ", ".join(sorted(game.guessed_letters)) or "-"
+    remaining = game.max_errors - game.errors
+
+    print()
+    print(f"Palabra: {game.display_progress()}")
+    print(f"Letras intentadas: {attempted}")
+    print(f"Intentos restantes: {remaining}")
