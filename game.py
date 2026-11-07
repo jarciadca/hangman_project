@@ -48,3 +48,24 @@ class HangmanGame:
                 partes.append("_")
 
         return " ".join(partes)
+
+    def process_guess(self, letter):
+        """
+        Procesa una letra adivinada por el jugador.
+
+        Registra la letra en guessed_letters. Si no está en la palabra,
+        incrementa errors en uno.
+
+        Args:
+            letter (str): letra ya validada, en minúscula.
+
+        Retorna:
+            bool: True si la letra está en la palabra, False si no.
+        """
+        self.guessed_letters.append(letter)
+
+        if letter in self.word:
+            return True
+
+        self.errors += 1
+        return False
