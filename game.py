@@ -1,76 +1,55 @@
 """
 Módulo con la clase HangmanGame que encapsula el estado del juego.
-
-Modela la palabra objetivo, las letras adivinadas, el límite de errores
-y el conteo actual de errores del jugador.
 """
 
 
 class HangmanGame:
     """
     Representa una partida del ahorcado.
-
-    Attributes:
-        word (str): palabra o frase objetivo a adivinar.
-        guessed_letters (list[str]): letras ya intentadas por el jugador.
-        max_errors (int): número máximo de fallos permitidos (6).
-        errors (int): cantidad de fallos cometidos hasta ahora.
     """
 
     def __init__(self, word):
-        """
-        Inicializa una nueva partida.
-        """
+        """Inicializa una nueva partida."""
         self.word = word
-
         self.guessed_letters = []
-
         self.max_errors = 6
-
         self.errors = 0
 
     def display_progress(self):
         """
         Devuelve una cadena con el progreso actual de la palabra.
-
-        Letras adivinadas se muestran tal cual; no adivinadas como '_'.
-        Caracteres separados por espacio para legibilidad.
-
-        Retorna:
-            str: representación visual del estado de la palabra.
+        Revela automáticamente los caracteres no alfabéticos (Tarea 7).
         """
         partes = []
-
         for caracter in self.word:
-            if caracter in self.guessed_letters:
+            # Si no es una letra (espacio, guion, etc.), se revela siempre.
+            if not caracter.isalpha():
                 partes.append(caracter)
+            # Si es letra y ya fue adivinada, se muestra.
+            elif caracter in self.guessed_letters:
+                partes.append(caracter)
+            # Si no, se oculta.
             else:
                 partes.append("_")
-
         return " ".join(partes)
 
+    def process_guess(self, letter):
+        """
+        Procesa una letra adivinada por el jugador (Tarea 4).
+        """
+        self.guessed_letters.append(letter)
+        if letter in self.word:
+            return True
+        self.errors += 1
+        return False
+
     def is_won(self):
-        """
-        Indica si el jugador ha ganado la partida.
-
-        Gana cuando todas las letras alfabéticas de la palabra han sido
-        adivinadas. Los no alfabéticos (espacios, guiones) se ignoran.
-
-        Returns:
-            bool: True si todas las letras alfabéticas están adivinadas.
-        """
+        """Indica si el jugador ha ganado (Tarea 6)."""
         for caracter in self.word:
             if caracter.isalpha() and caracter not in self.guessed_letters:
                 return False
         return True
 
     def is_lost(self):
-        """
-        Indica si el jugador ha perdido la partida.
-
-        Pierde cuando errors alcanza o supera max_errors.
-
-        Returns:
-            bool: True si errors >= max_errors.
-        """
+        """Indica si el jugador ha perdido (Tarea 6)."""
         return self.errors >= self.max_errors
