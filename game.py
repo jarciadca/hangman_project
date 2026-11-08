@@ -49,23 +49,28 @@ class HangmanGame:
 
         return " ".join(partes)
 
-    def process_guess(self, letter):
+    def is_won(self):
         """
-        Procesa una letra adivinada por el jugador.
+        Indica si el jugador ha ganado la partida.
 
-        Registra la letra en guessed_letters. Si no está en la palabra,
-        incrementa errors en uno.
+        Gana cuando todas las letras alfabéticas de la palabra han sido
+        adivinadas. Los no alfabéticos (espacios, guiones) se ignoran.
 
-        Args:
-            letter (str): letra ya validada, en minúscula.
-
-        Retorna:
-            bool: True si la letra está en la palabra, False si no.
+        Returns:
+            bool: True si todas las letras alfabéticas están adivinadas.
         """
-        self.guessed_letters.append(letter)
+        for caracter in self.word:
+            if caracter.isalpha() and caracter not in self.guessed_letters:
+                return False
+        return True
 
-        if letter in self.word:
-            return True
+    def is_lost(self):
+        """
+        Indica si el jugador ha perdido la partida.
 
-        self.errors += 1
-        return False
+        Pierde cuando errors alcanza o supera max_errors.
+
+        Returns:
+            bool: True si errors >= max_errors.
+        """
+        return self.errors >= self.max_errors
