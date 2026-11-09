@@ -46,22 +46,6 @@ def get_valid_letter(guessed_letters):
             return entry
 
 
-def display_status(game):
-    """
-    Muestra el estado actual de la partida.
-
-    Imprime el progreso de la palabra, las letras ya intentadas
-    (correctas e incorrectas) y los intentos incorrectos restantes.
-    """
-    attempted = ", ".join(sorted(game.guessed_letters)) or "-"
-    remaining = game.max_errors - game.errors
-
-    print()
-    print(f"Palabra: {game.display_progress()}")
-    print(f"Letras intentadas: {attempted}")
-    print(f"Intentos restantes: {remaining}")
-
-
 # Lista de 7 dibujos ASCII del ahorcado, indexados por errores.
 # Índice 0 = sin errores, índice 6 = completo. Lista (no dict) porque
 # el índice ES el número de errores → lookup O(1) directo.
@@ -143,3 +127,16 @@ def display_hangman(errors):
     # min() evita IndexError.
     indice = min(errors, len(HANGMAN_ART) - 1)
     print(HANGMAN_ART[indice])
+
+
+def display_status(game):
+    """Muestra el estado actual de la partida con dibujo ASCII."""
+    print("=" * 40)
+    # NUEVO: dibujo según errores (mejora opcional).
+    display_hangman(game.errors)
+    print("Palabra: ", game.display_progress())
+    letras = sorted(game.guessed_letters) if game.guessed_letters else ["-"]
+    print("Letras intentadas: ", ", ".join(letras))
+    restantes = game.max_errors - game.errors
+    print(f"Intentos incorrectos restantes: {restantes}")
+    print("=" * 40)
