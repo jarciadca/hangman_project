@@ -143,16 +143,3 @@ def display_hangman(errors):
     # min() evita IndexError.
     indice = min(errors, len(HANGMAN_ART) - 1)
     print(HANGMAN_ART[indice])
-
-
-def display_status(game):
-    """Muestra el estado actual de la partida con dibujo ASCII."""
-    print("=" * 40)
-    # NUEVO: dibujo según errores (mejora opcional).
-    display_hangman(game.errors)
-    print("Palabra: ", game.display_progress())
-    letras = sorted(game.guessed_letters) if game.guessed_letters else ["-"]
-    print("Letras intentadas: ", ", ".join(letras))
-    restantes = game.max_errors - game.errors
-    print(f"Intentos incorrectos restantes: {restantes}")
-    print("=" * 40)
