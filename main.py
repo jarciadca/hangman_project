@@ -1,3 +1,5 @@
+"""Punto de entrada del juego del ahorcado."""
+
 from utils import get_random_word, get_valid_letter, display_status
 from game import HangmanGame
 
